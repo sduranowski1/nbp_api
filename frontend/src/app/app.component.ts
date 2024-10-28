@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs';
 import { CurrencyRequest } from './models/currency-request.model';
 import { ExchangeRateResponse } from './models/exchange-rate-response.model';
 import { CommonModule } from '@angular/common'; // Import CommonModule
@@ -19,12 +19,17 @@ export class AppComponent {
   currencyForm: FormGroup;
   exchangeRateResponse: ExchangeRateResponse | null = null;
   error: string | null = null;
+  previousRequests: CurrencyRequest[] = []; // Use the imported CurrencyRequest model here
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.currencyForm = this.fb.group({
       currency: ['', Validators.required],
       name: ['', Validators.required]
     });
+  }
+
+  ngOnInit() {
+    this.fetchPreviousRequests();
   }
 
   onSubmit() {
@@ -45,5 +50,18 @@ export class AppComponent {
           }
         });
     }
+  }
+
+  fetchPreviousRequests() {
+    this.http.get<CurrencyRequest[]>('http://localhost:8080/currencies/requests')
+      .subscribe({
+        next: (data) => {
+          this.previousRequests = data;
+        },
+        error: (error) => {
+          console.error('Error fetching previous requests:', error);
+          this.error = 'Failed to load previous requests';
+        }
+      });
   }
 }
