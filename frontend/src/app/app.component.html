@@ -1,0 +1,28 @@
+<form [formGroup]="currencyForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="currency">Currency:</label>
+    <input id="currency" formControlName="currency" required>
+    <div *ngIf="currencyForm.get('currency')?.invalid && currencyForm.get('currency')?.touched">
+      <small class="error">Currency is required.</small>
+    </div>
+  </div>
+  <div>
+    <label for="name">Name:</label>
+    <input id="name" formControlName="name" required>
+    <div *ngIf="currencyForm.get('name')?.invalid && currencyForm.get('name')?.touched">
+      <small class="error">Name is required.</small>
+    </div>
+  </div>
+  <button type="submit" [disabled]="currencyForm.invalid">Submit</button>
+</form>
+
+<!-- Display exchange rate response -->
+<div *ngIf="exchangeRateResponse">
+  <h3>Exchange Rate Value:</h3>
+  <p>The current exchange rate value is: {{ exchangeRateResponse?.value }}</p>
+</div>
+
+<!-- Display error message -->
+<div *ngIf="error" class="error">
+  {{ error }}
+</div>
