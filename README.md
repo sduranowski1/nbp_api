@@ -4,7 +4,7 @@ This repository contains a Currency Exchange application built with a Java-based
 
 ## Project Structure
 
-- **Backend:** Java (Spring Boot), Gradle - Groovy, Java 17
+- **Backend:** Java (Spring), Gradle - Groovy, Java 17
 - **Frontend:** Angular 17
 
 ## Table of Contents
@@ -47,7 +47,7 @@ The Angular Frontend is a user interface where users can:
 
 ### Backend:
 - Java 17
-- Spring Boot (for API development)
+- Spring (for API development)
 - RESTful APIs
 - Database (MySQL 8)
 
